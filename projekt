@@ -1,0 +1,224 @@
+import tkinter as tk
+
+def naredi_slovar():
+    datoteka = open("nba.txt")
+    slovar = {}
+    for vrstica in datoteka:
+        vrsta = vrstica.split()
+        ime = ' '.join(vrsta[0:2])
+        procent_meta = ((float(vrsta[13]) * float(vrsta[12])) + (float(vrsta[15]) * float(vrsta[14]))) / (float(vrsta[12]) + float(vrsta[14]))
+        slovar[ime] = [vrsta[2], vrsta[3], float(vrsta[15]), float(vrsta[17]),\
+                       float(vrsta[18]), float(vrsta[20]), float(vrsta[22]),\
+                       float(vrsta[23]), round(procent_meta, 3)]
+    return slovar
+
+podatki = naredi_slovar()
+
+okno = tk.Tk()
+zgoraj = tk.Frame(okno)
+zgoraj.pack()
+
+sredina = tk.Frame(okno)
+sredina.pack()
+sredina1 = tk.Frame(okno)
+sredina1.pack()
+sredina2 = tk.Frame(okno)
+sredina2.pack()
+sredina3 = tk.Frame(okno)
+sredina3.pack()
+
+sredina4 = tk.Frame(okno)
+sredina4.pack()
+sredina5 = tk.Frame(okno)
+sredina5.pack()
+
+spodaj = tk.Frame(okno)
+spodaj.pack()
+spodaj1 = tk.Frame(okno)
+spodaj1.pack()
+spodaj2 = tk.Frame(okno)
+spodaj2.pack()
+spodaj3 = tk.Frame(okno)
+spodaj3.pack()
+
+
+###################################################
+
+vhod1 = tk.Entry(zgoraj)
+vhod1.grid(row = 0, column = 1)
+oznaka1 = tk.Label(zgoraj, text = "Pravilno vpiši ime igralca:").grid(row = 0, column = 0)
+
+meja1 = tk.Label(sredina, text = "######################################").pack()
+
+
+def igralec():
+    igralec = vhod1.get()
+    if igralec in podatki:
+        print("- {} ,  Pos. {},  PPG {},  REB {},  AST {}, STL {},  BLO {},  3P% {: .2f},  FG% {: .2f}".format(igralec, podatki[igralec][1],\
+                                                                                         podatki[igralec][3],podatki[igralec][4],\
+                                                                                         podatki[igralec][5], podatki[igralec][6],\
+                                                                                         podatki[igralec][7], podatki[igralec][2], podatki[igralec][8] ))
+        print("\n")
+    else:
+        print("Igralec ne obstaja oz. ime je narobe napisano")
+        print("\n")
+        
+
+
+
+variable = tk.StringVar(sredina1)
+variable.set("Ekipa")
+
+moznosti = tk.OptionMenu(sredina1, variable, "Ind", "Orl", "Min", "Dal", "Bos", "Lac", "Pho", "Uta", "Okc", "Phi",\
+                         "Nor", "Por", "Den", "Gol", "Det", "Men", "Was", "Bro", "Sac", "Cha", "Nyk", "Chi", "Hou",\
+                         "Cle", "San", "Lal", "Atl", "Tor", "Mia", "Mil")
+moznosti.pack()
+
+meja2 = tk.Label(sredina3, text = "######################################").pack()
+
+
+
+
+def ekipa():
+    ekipa = variable.get()
+    for igralec in podatki:
+        if podatki[igralec] [0] == ekipa:
+            print("- {},  Pos. {},  PPG {},  REB {},  AST {},  STL {},  BLO {},  3P% {: .2f}".format(igralec, podatki[igralec][1],\
+                                                                                                 podatki[igralec][3], podatki[igralec][4],\
+                                                                                                 podatki[igralec][5], podatki[igralec][6],\
+                                                                                                 podatki[igralec][7], podatki[igralec][2]))
+    print("\n")
+
+##################################################################
+
+vhod2 = tk.Entry(sredina4)
+vhod2.grid(row = 0, column = 1)
+oznaka2 = tk.Label(sredina4, text ="Prvi košarkaš:").grid(row = 0, column = 0)
+
+vhod3 = tk.Entry(sredina4)
+vhod3.grid(row = 1, column = 1)
+oznaka3 = tk.Label(sredina4, text ="Drugi košarkaš:").grid(row = 1, column = 0)
+
+meja3 = tk.Label(sredina5, text = "######################################").pack()
+
+
+
+
+def primerjaj():
+    prvi_igralec = vhod2.get()
+    drugi_igralec = vhod3.get()
+    if prvi_igralec not in podatki:
+        print("Prvi igralec ne obstaja oz. ime je narobe napisano")
+    else:
+        print("- {} ,  Pos. {},  PPG {},  REB {},  AST {},  STL {},  BLO {},  3P% {: .2f}".format(prvi_igralec, podatki[prvi_igralec][1],\
+                                                                                         podatki[prvi_igralec][3],podatki[prvi_igralec][4],\
+                                                                                         podatki[prvi_igralec][5], podatki[prvi_igralec][6],\
+                                                                                         podatki[prvi_igralec][7], podatki[prvi_igralec][2]))
+    print("\n")
+    if drugi_igralec not in podatki:
+        print("Drugi igralec ne obstaja oz. ime je narobe napisano")
+    else:
+        print("- {} ,  Pos. {},  PPG {},  REB {},  AST {}, STL {},  BLO {},  3P% {: .2f}".format(drugi_igralec, podatki[drugi_igralec][1],\
+                                                                                         podatki[drugi_igralec][3],podatki[drugi_igralec][4],\
+                                                                                         podatki[drugi_igralec][5], podatki[drugi_igralec][6],\
+                                                                                         podatki[drugi_igralec][7], podatki[drugi_igralec][2]))
+    print("\n")
+
+#################################################################
+    
+variable1 = tk.StringVar(spodaj)
+variable1.set("Povprečne točke")
+moznosti1 = tk.OptionMenu(spodaj, variable1, "Povprečne točke", "Skoki", "Podaje",\
+                          "Ukradene žoge", "Blokade", "Odstotek meta", "Odstotek meta za tri točke")
+moznosti1.pack()
+
+
+variable2 = tk.StringVar(spodaj1)
+variable2.set("Vsi")
+moznosti2 = tk.OptionMenu(spodaj1, variable2, "Vsi", "PG", "SG", "SF","PF", "C")
+moznosti2.pack()
+
+
+variable3 = tk.StringVar(spodaj2)
+variable3.set("5")
+moznosti3 = tk.OptionMenu(spodaj2, variable3, "5", "10", "15", "20", "50")
+moznosti3.pack()
+
+
+def sortiraj():
+    stat = variable1.get()
+    if stat == "Povprečne točke":
+        stolpec = 3
+    elif stat == "Skoki":
+        stolpec = 4
+    elif stat == "Podaje":
+        stolpec = 5
+    elif stat == "Ukradene žoge":
+        stolpec = 6
+    elif stat == "Blokade":
+        stolpec = 7
+    elif stat == "Odstotek meta":
+        stolpec = 8
+    elif stat == "Odstotek meta za tri točke":
+        stolpec = 2
+
+    koliko = int(variable3.get())
+    pozicija = variable2.get()
+            
+    podatki2 = sorted(podatki.items(), key = lambda t : t[1] [stolpec])
+    podatki3 = podatki2[::-1]
+    podatki4 = dict(podatki3)
+
+    stevec = 0
+    for igralec in podatki4:
+        if pozicija != "Vsi":
+            if stevec != koliko:
+                if podatki4[igralec][1] == pozicija:
+                    print("- {} ,  Pos. {},  PPG {},  REB {},  AST {},  STL {},  BLO {},  3P% {: .2f},  FG% {: .2f}".format(igralec, podatki4[igralec][1],\
+                                                                                         podatki4[igralec][3],podatki4[igralec][4],\
+                                                                                         podatki4[igralec][5], podatki4[igralec][6],\
+                                                                                         podatki4[igralec][7], podatki4[igralec][2], podatki4[igralec][8] ))
+                    stevec += 1
+            
+        elif stevec != koliko:
+            print("- {} ,  Pos. {},  PPG {},  REB {},  AST {},  STL {},  BLO {},  3P% {: .2f},  FG% {: .2f}".format(igralec, podatki4[igralec][1],\
+                                                                                         podatki4[igralec][3],podatki4[igralec][4],\
+                                                                                         podatki4[igralec][5], podatki4[igralec][6],\
+                                                                                         podatki4[igralec][7], podatki4[igralec][2], podatki4[igralec][8] ))
+            stevec += 1
+    print("\n")
+
+#####################################################
+
+
+
+
+gumb1 = tk.Button(zgoraj, text = "Išči igralca", command = igralec).grid(row = 1, column = 1, pady = 5)
+gumb2 = tk.Button(sredina2, text = "Išči ekipo", command = ekipa).grid(row = 1, column = 0)
+gumb3 = tk.Button(sredina4, text = "Primerjaj", command = primerjaj).grid(row = 2, column = 1)
+gumb4 = tk.Button(spodaj3, text = "Sortiraj", command = sortiraj).pack()
+
+
+
+okno.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
